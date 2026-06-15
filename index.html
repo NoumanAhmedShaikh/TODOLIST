@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+        .container {
+            width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+        }
+
+        .main {
+            display: flex;
+            gap: 10px;
+        }
+
+        .main input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .main button {
+            padding: 12px 20px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .main button:hover {
+            background: #0056b3;
+        }
+
+        .task {
+            margin-top: 20px;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f8f8;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .task-item p {
+            font-size: 16px;
+        }
+
+        .btns {
+            display: flex;
+            gap: 5px;
+        }
+
+        .complete {
+            background: green;
+            color: white;
+            border: none;
+            padding: 8px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .delete {
+            background: crimson;
+            color: white;
+            border: none;
+            padding: 8px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="main">
+            <input type="text" id="taskInput" placeholder="Enter Task">
+            <button id="add-btn">Add</button>
+        </div>
+
+        <div class="task"></div>
+
+    </div>
+
+    <script>
+
+        $("#add-btn").click(function () {
+
+            let task = $("#taskInput").val().trim();
+
+            if (task === "") {
+                alert("Please enter a task");
+                return;
+            }
+
+            let newTask = `
+                <div class="task-item">
+                    <p>${task}</p>
+
+                    <div class="btns">
+                        <button class="complete">✓</button>
+                        <button class="delete">✕</button>
+                    </div>
+                </div>
+            `;
+
+            $(".task").append(newTask);
+
+            $("#taskInput").val("");
+        });
+
+        $(document).on("click", ".delete", function () {
+            $(this).closest(".task-item").remove();
+        });
+
+        $(document).on("click", ".complete", function () {
+            $(this).closest(".task-item").find("p").toggleClass("completed");
+        });
+
+        $("#taskInput").keypress(function (e) {
+            if (e.which === 13) {
+                $("#add-btn").click();
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
